@@ -398,6 +398,174 @@ ws5.cell(row=28, column=2, value="Pawan Singh Kapkoti — MSc Data Analytics, As
 ws5.cell(row=29, column=2, value="Microsoft Certified: Power BI Data Analyst Associate (PL-300)").font = BODY
 ws5.cell(row=30, column=2, value="github.com/Pawansingh3889 | linkedin.com/in/pawan-singh-kapkoti-100176347").font = NOTE
 
+# ============================================================
+# SHEET 6: CASE STUDY — SINGLE GRADUATE PROFILE
+# ============================================================
+ws6 = wb.create_sheet('Case Study - Graduate Profile')
+set_widths(ws6, [35, 20, 20, 30])
+
+ws6.cell(row=1, column=1, value="Case Study: Single Graduate Pipeline Journey").font = H1
+ws6.merge_cells('A1:D1')
+ws6.cell(row=2, column=1, value="One data point in the pipeline. Update blue cells to model any graduate.").font = NOTE
+
+section_header(ws6, 4, "GRADUATE PROFILE (Updateable)", 4)
+write_row(ws6, 5, ['Field', 'Value', 'Unit', 'Notes'], [HEADER]*4, [BLUE]*4)
+
+profile = [
+    ('Name', 'Pawan Singh Kapkoti', '', ''),
+    ('Nationality', 'Indian', '', ''),
+    ('Qualification', 'MSc Data Analytics', '', 'Aston University, 2:1'),
+    ('Graduation date', 'March 2024', '', ''),
+    ('Visa type', 'PSW (Graduate Route)', '', '2 year duration'),
+    ('Visa expiry', 'May 2026', '', ''),
+    ('Days remaining (as of analysis)', 42, 'days', 'Auto-update when reviewing'),
+    ('Certifications earned in UK', 'PL-300, Google Data Analytics', '', 'Self-funded, self-studied'),
+    ('Portfolio projects built', 10, '', 'All public on GitHub'),
+    ('Target role', 'Data Analyst / Data Engineer', '', 'SOC 3544 / 3133'),
+    ('Target salary', 28000, 'GBP/yr', 'Entry level data analyst'),
+]
+
+for i, (field, value, unit, notes) in enumerate(profile):
+    r = 6 + i
+    ws6.cell(row=r, column=1, value=field).font = BODY
+    ws6.cell(row=r, column=2, value=value).font = INPUT_FONT
+    ws6.cell(row=r, column=2).fill = INPUT_YELLOW
+    if isinstance(value, int): ws6.cell(row=r, column=2).number_format = '#,##0'
+    ws6.cell(row=r, column=3, value=unit).font = NOTE
+    ws6.cell(row=r, column=4, value=notes).font = NOTE
+    for c in range(1, 5): ws6.cell(row=r, column=c).border = BORDER
+
+r = 19
+section_header(ws6, r, "INVESTMENT INTO UK ECONOMY", 4)
+write_row(ws6, r+1, ['Item', 'Amount (GBP)', 'Recipient', 'Type'], [HEADER]*4, [BLUE]*4)
+
+investment = [
+    ('MSc tuition fee', 15000, 'Aston University', 'Education'),
+    ('Student visa fee', 490, 'Home Office', 'Government fee'),
+    ('NHS surcharge (student, 1 year)', 776, 'NHS / Treasury', 'Healthcare access'),
+    ('PSW visa fee', 822, 'Home Office', 'Government fee'),
+    ('NHS surcharge (PSW, 2 years)', 2070, 'NHS / Treasury', 'Healthcare access'),
+    ('Living costs (rent, food, bills - 30 months)', 25000, 'UK landlords, businesses', 'Consumer spending'),
+    ('PL-300 exam fee', 165, 'Microsoft (UK operation)', 'Certification'),
+    ('Income tax paid (20 months employment)', 3200, 'HMRC', 'Tax revenue'),
+    ('National Insurance paid (20 months)', 2400, 'HMRC', 'Tax revenue'),
+    ('Council tax paid (20 months)', 1600, 'Hull City Council', 'Local government'),
+    ('TOTAL INVESTED INTO UK', None, '', ''),
+]
+
+for i, (item, amount, recipient, category) in enumerate(investment):
+    r2 = r + 2 + i
+    ws6.cell(row=r2, column=1, value=item).font = BOLD if amount is None else BODY
+    if amount is not None:
+        ws6.cell(row=r2, column=2, value=amount).font = INPUT_FONT
+        ws6.cell(row=r2, column=2).fill = INPUT_YELLOW
+    else:
+        ws6.cell(row=r2, column=2, value=f'=SUM(B{r+2}:B{r2-1})').font = ALERT_FONT
+        ws6.cell(row=r2, column=2).fill = ALERT_RED
+    ws6.cell(row=r2, column=2).number_format = '#,##0'
+    ws6.cell(row=r2, column=3, value=recipient).font = NOTE
+    ws6.cell(row=r2, column=4, value=category).font = NOTE
+    for c in range(1, 5): ws6.cell(row=r2, column=c).border = BORDER
+
+r = 33
+section_header(ws6, r, "WHAT THE UK GOT BACK", 4)
+write_row(ws6, r+1, ['Metric', 'Value', 'Unit', 'Source'], [HEADER]*4, [BLUE]*4)
+
+returns = [
+    ('Tax + NI contributed', 5600, 'GBP', 'Payslip data'),
+    ('Consumer spending in UK economy', 25000, 'GBP', 'Rent, food, transport, retail'),
+    ('NHS services consumed', 150, 'GBP', 'One A&E visit (estimated NHS cost)'),
+    ('Prescription cost paid by graduate', 15, 'GBP', 'Out of pocket'),
+    ('NHS payments made (NI share + IHS)', 4609, 'GBP', 'NI allocation + Immigration Health Surcharge'),
+    ('NHS payment-to-usage ratio', None, 'x', ''),
+    ('Net NHS surplus from this graduate', None, 'GBP', ''),
+    ('Total tax + fees paid to government', None, 'GBP', ''),
+    ('Tuition paid to university', 15000, 'GBP', ''),
+    ('TOTAL UK REVENUE FROM THIS GRADUATE', None, 'GBP', ''),
+]
+
+for i, (metric, value, unit, source) in enumerate(returns):
+    r2 = r + 2 + i
+    ws6.cell(row=r2, column=1, value=metric).font = BODY
+    if value is not None:
+        ws6.cell(row=r2, column=2, value=value).font = INPUT_FONT
+        ws6.cell(row=r2, column=2).fill = INPUT_YELLOW
+    ws6.cell(row=r2, column=2).number_format = '#,##0'
+    ws6.cell(row=r2, column=3, value=unit).font = NOTE
+    ws6.cell(row=r2, column=4, value=source).font = NOTE
+    for c in range(1, 5): ws6.cell(row=r2, column=c).border = BORDER
+
+# NHS ratio formula
+ws6.cell(row=r+7, column=2, value=f'=B{r+6}/B{r+4}').font = OUTPUT_FONT
+ws6.cell(row=r+7, column=2).fill = OUTPUT_GREEN
+ws6.cell(row=r+7, column=2).number_format = '0.0'
+# Net NHS surplus
+ws6.cell(row=r+8, column=2, value=f'=B{r+6}-B{r+4}').font = OUTPUT_FONT
+ws6.cell(row=r+8, column=2).fill = OUTPUT_GREEN
+# Total govt revenue
+ws6.cell(row=r+9, column=2, value=f'=B{r+2}+B{r+6}+B21+B22+B23+B24').font = OUTPUT_FONT
+ws6.cell(row=r+9, column=2).fill = OUTPUT_GREEN
+# Total UK revenue
+ws6.cell(row=r+11, column=2, value=f'=B{r+9}+B{r+10}').font = OUTPUT_FONT
+ws6.cell(row=r+11, column=2).fill = OUTPUT_GREEN
+
+r = 46
+section_header(ws6, r, "EMPLOYABILITY ASSESSMENT", 4)
+write_row(ws6, r+1, ['Skill / Qualification', 'Evidence', 'Relevance', 'Verified'], [HEADER]*4, [BLUE]*4)
+
+skills = [
+    ('MSc Data Analytics (2:1)', 'Aston University transcript', 'Core qualification', 'Yes'),
+    ('Microsoft PL-300 (Power BI)', 'Credential ID: C2A34AA4132D8722', 'Industry certification', 'Online verifiable'),
+    ('Google Data Analytics Certificate', 'Coursera — 8 courses', 'Industry training', 'Verifiable'),
+    ('Python (pandas, scikit-learn, matplotlib)', '10 GitHub projects with executed notebooks', 'Primary language for data roles', 'Public repos'),
+    ('SQL (window functions, CTEs, aggregations)', '14 analytical queries on GitHub', 'Required for all data roles', 'Public repo'),
+    ('dbt (Core)', '11 models, 94 automated tests across 2 projects', 'Growing demand in data engineering', 'Public repos'),
+    ('Power BI', 'PL-300 certified + dashboard in Apex project', 'Most requested BI tool in UK', 'Verifiable'),
+    ('PostgreSQL', '3 projects using PostgreSQL (local + Neon cloud)', 'Standard database', 'Public repos'),
+    ('GitHub Actions CI/CD', '3 workflows: lint, test, scheduled ingest', 'DevOps capability', 'Public repo'),
+    ('Docker', 'Dockerfile in Apex project', 'Containerisation', 'Public repo'),
+    ('AWS (S3, Glue, Athena)', 'Crime Analysis project on AWS', 'Cloud platform', 'Public repo'),
+    ('Excel (advanced formulas, charts)', 'Employment analysis + case study workbook', 'Required for analyst roles', 'Public repo'),
+    ('Streamlit', 'Live deployed dashboard', 'Data app framework', 'Live URL'),
+    ('ERP systems (SI Integreater)', '12 months daily operational use', 'Production environment experience', 'Employer reference'),
+    ('Team leadership', 'Managing 11+ operatives at Copernus', 'Soft skill', 'Employer reference'),
+]
+
+for i, (skill, evidence, relevance, verified) in enumerate(skills):
+    r2 = r + 2 + i
+    ws6.cell(row=r2, column=1, value=skill).font = BODY
+    ws6.cell(row=r2, column=2, value=evidence).font = NOTE
+    ws6.cell(row=r2, column=3, value=relevance).font = NOTE
+    ws6.cell(row=r2, column=4, value=verified).font = OUTPUT_FONT if verified in ['Yes', 'Online verifiable', 'Verifiable', 'Live URL'] else BODY
+    for c in range(1, 5): ws6.cell(row=r2, column=c).border = BORDER
+
+r = r + 2 + len(skills) + 1
+section_header(ws6, r, "PIPELINE OUTCOME", 4)
+ws6.cell(row=r+1, column=1, value="Skilled Worker visa salary threshold").font = BODY
+ws6.cell(row=r+1, column=2, value="='Model Inputs'!B10").font = OUTPUT_FONT
+ws6.cell(row=r+1, column=2).fill = OUTPUT_GREEN
+ws6.cell(row=r+1, column=2).number_format = '#,##0'
+
+ws6.cell(row=r+2, column=1, value="Graduate's target salary").font = BODY
+ws6.cell(row=r+2, column=2, value=28000).font = INPUT_FONT
+ws6.cell(row=r+2, column=2).fill = INPUT_YELLOW
+ws6.cell(row=r+2, column=2).number_format = '#,##0'
+
+ws6.cell(row=r+3, column=1, value="Salary gap").font = BOLD
+ws6.cell(row=r+3, column=2, value=f'=B{r+1}-B{r+2}').font = ALERT_FONT
+ws6.cell(row=r+3, column=2).fill = ALERT_RED
+ws6.cell(row=r+3, column=2).number_format = '#,##0'
+
+ws6.cell(row=r+4, column=1, value="Can this graduate qualify for Skilled Worker visa?").font = BOLD
+ws6.cell(row=r+4, column=2, value=f'=IF(B{r+3}>0,"NO - Salary gap of "&TEXT(B{r+3},"#,##0")&" prevents sponsorship","YES")').font = ALERT_FONT
+ws6.cell(row=r+4, column=2).fill = ALERT_RED
+
+ws6.cell(row=r+6, column=1, value="CONCLUSION").font = H2
+ws6.cell(row=r+7, column=1, value="This graduate invested 51,523 into the UK economy. They hold a postgraduate degree,").font = BODY
+ws6.cell(row=r+8, column=1, value="an industry certification, 15 verified technical skills, and 10 portfolio projects.").font = BODY
+ws6.cell(row=r+9, column=1, value="The salary threshold prevents them from staying. The pipeline loses this talent.").font = BODY
+ws6.cell(row=r+10, column=1, value="This is one case. Multiply by 100,000 graduates per year.").font = BOLD
+
 output = 'UK_Graduate_Talent_Pipeline_Analysis.xlsx'
 wb.save(output)
 print(f'Saved: {output}')
